@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSemeia - Inteligência Agrícola | Agrinho 2026</title>
+    <style>
+        /* --- DIRETRIZES DE CORES E ACESSIBILIDADE (Contraste WCAG Garantido) --- */
+        :root {
+            --verde-escuro: #1b5e20;
+            --verde-folha: #2e7d32;
+            --terra: #4e342e;
+            --fundo-opaco: rgba(245, 247, 245, 0.92); 
+            --texto: #1a1a1a;
+            --branco: #ffffff;
+            --alerta: #c62828;
+            --link: #01579b;
+            --borda: #dcdcdc;
+            --tamanho-fonte-base: 16px; 
+        }
+
+        /* Modo Escuro de Alto Contraste */
+        body.modo-escuro {
+            --verde-escuro: #a5d6a7;
+            --verde-folha: #81c784;
+            --terra: #d7ccc8;
+            --fundo-opaco: rgba(18, 18, 18, 0.94); 
+            --texto: #f5f5f5;
+            --branco: #242424;
+            --link: #64b5f6;
+            --borda: #444444;
+        }
+
+        html {
+            font-size: var(--tamanho-fonte-base);
+        }
+
+        /* --- IDENTIDADE VISUAL E PLANO DE FUNDO AGRÍCOLA --- */
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: var(--texto);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            
+            /* Imagem de fundo geral da página: Campo de cultivo verdejante */
+            background-image: linear-gradient(var(--fundo-opaco), var(--fundo-opaco)), 
+                              url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        /* Barra de Acessibilidade Superior */
+        .barra-acessibilidade {
+            background-color: rgba(225, 230, 225, 0.96);
+            padding: 0.6rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--borda);
+            position: relative;
+            z-index: 10;
+        }
+
+        body.modo-escuro .barra-acessibilidade { background-color: rgba(35, 35, 35, 0.96); }
+
+        .btn-acessibilidade {
+            background-color: var(--branco);
+            color: var(--texto);
+            border: 1px solid var(--borda);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.85rem;
+            flex: 1 1 140px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .btn-acessibilidade:hover {
+            background-color: var(--verde-folha);
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+        }
+
+        .btn-acessibilidade:active {
+            transform: scale(0.95);
+        }
+
+        /* --- CABEÇALHO COM IMAGEM FOCO EM LAVOURA / SOJA --- */
+        header {
+            background: linear-gradient(135deg, rgba(27, 94, 32, 0.85), rgba(78, 52, 46, 0.9)), 
+                        url('https://images.unsplash.com/photo-1605000797499-95a51c7769ae?w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: #ffffff;
+            text-align: center;
+            padding: 4.5rem 1rem;
+            border-bottom: 4px solid var(--verde-folha);
+        }
+
+        header h1 { margin: 0; font-size: 2.5rem; text-shadow: 0 2px 6px rgba(0,0,0,0.6); }
+        header p { margin-top: 0.6rem; font-size: 1.2rem; opacity: 0.95; }
+
+        main {
+            max-width: 1050px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* --- CARDS COM FUNDO BRANCO OTIMIZADO --- */
+        section {
+            background: var(--branco);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+            border: 1px solid var(--borda);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        h2 {
+            color: var(--verde-escuro);
+            border-bottom: 3px solid var(--verde-folha);
+            padding-bottom: 0.6rem;
+            margin-top: 0;
+            font-size: 1.65rem;
+        }
+
+        a { color: var(--link); text-decoration: none; font-weight: bold; transition: color 0.2s ease; }
+        a:hover { text-decoration: underline; }
+
+        /* --- GALERIA DE TECNOLOGIAS --- */
+        .galeria-agro {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        figure.agro-card {
+            background: rgba(0, 0, 0, 0.01);
+            border-radius: 10px;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--borda);
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
+        }
+
+        figure.agro-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        figure.agro-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        figcaption {
+            padding: 1.4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        figcaption h3 { margin: 0; color: var(--terra); font-size: 1.3rem; }
+        figcaption p { margin: 0; font-size: 0.95rem; }
+        .fonte-img { font-size: 0.8rem; opacity: 0.7; border-top: 1px solid var(--borda); padding-top: 0.5rem; margin-top: 0.5rem; }
+
+        /* Tabela Otimizada */
+        .tabela-container { 
+            overflow-x: auto; 
+            margin: 1.5rem 0; 
+            border: 1px solid var(--borda);
+            border-radius: 8px;
+        }
+        table { width: 100%; border-collapse: collapse; min-width: 550px; }
+        th, td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--borda); font-size: 0.95rem; }
+        th { background-color: var(--verde-escuro); color: #ffffff; }
+        tr:nth-child(even) { background-color: rgba(0,0,0,0.02); }
+
+        /* Calculadora */
+        .calculadora-secao { border-left: 8px solid var(--verde-folha); }
+
+        .grid-campos {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .campo { display: flex; flex-direction: column; }
+        label { font-weight: 600; margin-bottom: 0.4rem; font-size: 0.95rem; }
+        select, input { padding: 0.8rem; border: 2px solid var(--borda); background-color: var(--branco); color: var(--texto); border-radius: 6px; font-size: 1rem; }
+        select:focus, input:focus { border-color: var(--verde-folha); outline: none; }
+
+        button.btn-principal {
+            background-color: var(--verde-escuro);
+            color: #ffffff;
+            border: none;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+        button.btn-principal:hover { background-color: var(--verde-folha); }
+        button.btn-principal:active { transform: scale(0.97); }
+
+        .painel-resposta { margin-top: 1.5rem; padding: 1.2rem; border-radius: 6px; display: none; }
+        .sucesso { background-color: #e8f5e9; border: 1px solid #c8e6c9; color: #1b5e20; }
+        body.modo-escuro .sucesso { background-color: #1b5e20; border: 1px solid #c8e6c9; color: #e8f5e9; }
+        .erro { background-color: #ffebee; border: 1px solid #ffcdd2; color: var(--alerta); }
+        
+        /* --- CENTRAL DE FONTES BRASILEIRAS CORRIGIDAS --- */
+        .grid-links-externos {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .item-link-externo {
+            border: 1px solid var(--borda);
+            border-radius: 10px;
+            background-color: var(--branco);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .item-link-externo:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+            border-color: var(--verde-folha);
+        }
+
+        .item-link-externo:active {
+            transform: translateY(-3px) scale(0.98);
+        }
+
+        .item-link-externo img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--borda);
+        }
+
+        .conteudo-link-externo {
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+        }
+
+        .item-link-externo h3 { margin: 0 0 0.5rem 0; font-size: 1.15rem; color: var(--verde-escuro); }
+        .item-link-externo p { margin: 0 0 1rem 0; font-size: 0.9rem; opacity: 0.9; }
+
+        footer {
+            text-align: center; padding: 2.5rem 1rem; background-color: rgba(78, 52, 46, 0.96); color: #ffffff; margin-top: 5rem;
+        }
+        footer a { color: #ffffff; text-decoration: underline; }
+
+        /* --- SUPORTE EM DISPOSITIVOS MÓVEIS / DESKTOPS --- */
+        @media (min-width: 600px) {
+            header { padding: 4.5rem 2rem; }
+            header h1 { font-size: 2.8rem; }
+            .galeria-agro { grid-template-columns: repeat(2, 1fr); }
+            .grid-campos { grid-template-columns: repeat(2, 1fr); }
+            .grid-links-externos { grid-template-columns: repeat(2, 1fr); }
+            section { padding: 2rem; }
+            .btn-acessibilidade { flex: 0 1 auto; }
+        }
+
+        @media (min-width: 1024px) {
+            header { padding: 5.5rem 1rem; }
+            header h1 { font-size: 3.2rem; }
+            .grid-campos { grid-template-columns: repeat(3, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="barra-acessibilidade" aria-label="Menu de Acessibilidade">
+        <button class="btn-acessibilidade" onclick="alternarTema()">🌓 Alternar Contraste</button>
+        <button class="btn-acessibilidade" onclick="ajustarFonte(1)">A+ Aumentar Fonte</button>
+        <button class="btn-acessibilidade" onclick="ajustarFonte(-1)">A- Diminuir Fonte</button>
+        <button class="btn-acessibilidade" id="btn-leitura" onclick="alternarLeitura()">🔊 Ler Conteúdo</button>
+    </nav>
+
+    <header>
+        <h1>EcoSemeia - Inteligência Agrícola</h1>
+        <p>Planejamento de Precisão para o Pequeno e Médio Produtor | Projeto Agrinho 2026</p>
+    </header>
+
+    <main id="conteudo-principal">
+        
+        <section aria-label="Galeria de Práticas Agrícolas">
+            <h2>Manejo e Tecnologias de Cultivo</h2>
+            <p>O sucesso da lavoura começa na escolha correta da densidade de plantas e no manejo sustentável do solo.</p>
+            
+            <div class="galeria-agro">
+                <figure class="agro-card">
+                    <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=600&q=80" alt="Pequeno broto verde saudável nascendo diretamente da terra cultivada.">
+                    <figcaption>
+                        <div>
+                            <h3>Germinação Uniforme</h3>
+                            <p>O espaçamento correto garante que cada planta receba luz, ventilação e os nutrientes ideais do solo.</p>
+                        </div>
+                        <div class="fonte-img">
+                            Fonte: <a href="https://unsplash.com/" target="_blank" rel="noopener noreferrer">Unsplash / Broto Agrícola</a>
+                        </div>
+                    </figcaption>
+                </figure>
+
+                <figure class="agro-card">
+                    <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&q=80" alt="Trator verde moderno operando em linhas de plantio direto sobre o campo.">
+                    <figcaption>
+                        <div>
+                            <h3>Sistema de Plantio Direto</h3>
+                            <p>Conservação da umidade do solo e proteção orgânica de alta performance contra a ação da erosão hídrica.</p>
+                        </div>
+                        <div class="fonte-img">
+                            Fonte: <a href="https://unsplash.com/" target="_blank" rel="noopener noreferrer">Unsplash / Linha de Plantio</a>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section aria-label="Dados Técnicos de Cultivo">
+            <h2>Tabela de Referência: Densidade Agro (Dados Reais)</h2>
+            <p>Valores médios recomendados pela extensão rural para o cálculo de sementes por hectare (ha) baseados na <strong>Embrapa</strong>:</p>
+            
+            <div class="tabela-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cultura</th>
+                            <th>População Recomendada (Plantas/ha)</th>
+                            <th>Fonte Técnica Oficial</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Milho (Zea mays)</td>
+                            <td>60.000 a 70.000 sementes/ha</td>
+                            <td><a href="https://www.embrapa.br/" target="_blank" rel="noopener noreferrer">Embrapa Milho e Sorgo</a></td>
+                        </tr>
+                        <tr>
+                            <td>Soja (Glycine max)</td>
+                            <td>250.000 a 350.000 sementes/ha</td>
+                            <td><a href="https://www.embrapa.br/" target="_blank" rel="noopener noreferrer">Embrapa Soja</a></td>
+                        </tr>
+                        <tr>
+                            <td>Feijão Comum</td>
+                            <td>220.000 a 260.000 sementes/ha</td>
+                            <td><a href="https://www.embrapa.br/" target="_blank" rel="noopener noreferrer">Embrapa Arroz e Feijão</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="calculadora-secao" aria-labelledby="titulo-calc">
+            <h2 id="titulo-calc">Calculadora de Necessidade de Sementes</h2>
+            <p>Utilize esta ferramenta para simular o volume total de insumos e o investimento necessário para a sua lavoura.</p>
+
+            <form id="form-agro" onsubmit="calcularInsumos(event)">
+                <div class="grid-campos">
+                    <div class="campo">
+                        <label for="cultura">Cultura Desejada:</label>
+                        <select id="cultura" required>
+                            <option value="">Selecione...</option>
+                            <option value="65000">Milho (Média: 65.000 sementes/ha)</option>
+                            <option value="300000">Soja (Média: 300.000 sementes/ha)</option>
+                            <option value="240000">Feijão (Média: 240.000 sementes/ha)</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="area">Área de Plantio (Hectares):</label>
+                        <input type="number" id="area" step="0.1" min="0.1" placeholder="Ex: 5" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="preco-mil">Preço por 1.000 sementes (R$):</label>
+                        <input type="number" id="preco-mil" step="0.01" min="0.01" placeholder="Ex: 25.50" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-principal">Processar Planejamento</button>
+            </form>
+
+            <div id="resultado-painel" class="painel-resposta" aria-live="polite"></div>
+        </section>
+
+        <section aria-label="Portais de Apoio e Conhecimento">
+            <h2>Central de Conhecimento e Links Oficiais</h2>
+            <p>Acesse com segurança os canais e órgãos oficiais que regem e apoiam a agricultura do Paraná e do país:</p>
+            
+            <div class="grid-links-externos">
+                <div class="item-link-externo" onclick="window.open('https://www.idrparana.pr.gov.br/', '_blank')">
+                    <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?w=600&q=80" alt="Bela plantação agrícola rústica sob a luz do dia no Paraná.">
+                    <div class="conteudo-link-externo">
+                        <div>
+                            <h3>IDR-Paraná</h3>
+                            <p>Instituto de Desenvolvimento Rural do Paraná. Traz pesquisas aplicadas ao solo paranaense, circuitos de agroecologia e assistência técnica.</p>
+                        </div>
+                        <a href="https://www.idrparana.pr.gov.br/" target="_blank" rel="noopener noreferrer">Acessar IDR-Paraná ↗</a>
+                    </div>
+                </div>
+
+                <div class="item-link-externo" onclick="window.open('https://www.sistemafaep.org.br/', '_blank')">
+                    <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&q=80" alt="Broto verde brotando em campo aberto de cooperativa agrícola sustentável.">
+                    <div class="conteudo-link-externo">
+                        <div>
+                            <h3>Sistema FAEP / SENAR-PR</h3>
+                            <p>Canal oficial voltado à capacitação, cursos gratuitos e cartilhas de segurança e produtividade do homem do campo no Paraná.</p>
+                        </div>
+                        <a href="https://www.sistemafaep.org.br/" target="_blank" rel="noopener noreferrer">Acessar Sistema FAEP ↗</a>
+                    </div>
+                </div>
+
+                <div class="item-link-externo" onclick="window.open('https://www.agricultura.pr.gov.br/deral', '_blank')">
+                    <img src="https://images.unsplash.com/photo-1536657464919-892541f6096a?w=600&q=80" alt="Plantação robusta de milho em fase final de maturação.">
+                    <div class="conteudo-link-externo">
+                        <div>
+                            <h3>DERAL (SEAB Paraná)</h3>
+                            <p>Departamento de Economia Rural da Secretaria de Agricultura do Paraná. Relatórios confiáveis de safras, cotações e estimativas de mercado.</p>
+                        </div>
+                        <a href="https://www.agricultura.pr.gov.br/deral" target="_blank" rel="noopener noreferrer">Acessar DERAL ↗</a>
+                    </div>
+                </div>
+
+                <div class="item-link-externo" onclick="window.open('https://www.embrapa.br/soja', '_blank')">
+                    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&q=80" alt="Plantação verde folhosa de soja saudável em Londrina.">
+                    <div class="conteudo-link-externo">
+                        <div>
+                            <h3>Embrapa Soja (Londrina/PR)</h3>
+                            <p>Centro de excelência nacional focado em alta tecnologia, genética de sementes de soja, sustentabilidade e controle biológico.</p>
+                        </div>
+                        <a href="https://www.embrapa.br/soja" target="_blank" rel="noopener noreferrer">Acessar Embrapa Soja ↗</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Desenvolvido para o <strong>Projeto Agrinho 2026</strong>. Interface semântica, responsiva e acessível.</p>
+        <p><small>Fontes de Referência Técnico-Científica: <strong>Embrapa Soja, IDR-Paraná e DERAL</strong>.</small></p>
+    </footer>
+
+    <script>
+        function alternarTema() {
+            document.body.classList.toggle('modo-escuro');
+        }
+
+        let tamanhoAtualPixels = 16;
+        function ajustarFonte(direcao) {
+            tamanhoAtualPixels += (direcao * 2);
+            if (tamanhoAtualPixels < 12) tamanhoAtualPixels = 12;
+            if (tamanhoAtualPixels > 24) tamanhoAtualPixels = 24;
+            document.documentElement.style.setProperty('--tamanho-fonte-base', tamanhoAtualPixels + 'px');
+        }
+
+        let sintetizador = window.speechSynthesis;
+        let locucaoAtiva = null;
+
+        function alternarLeitura() {
+            const btn = document.getElementById('btn-leitura');
+            if (sintetizador.speaking) {
+                sintetizador.cancel();
+                btn.innerHTML = "🔊 Ler Conteúdo";
+                return;
+            }
+            const textoParaLer = document.getElementById('conteudo-principal').innerText;
+            locucaoAtiva = new SpeechSynthesisUtterance(textoParaLer);
+            locucaoAtiva.lang = 'pt-BR';
+            locucaoAtiva.onend = function() { btn.innerHTML = "🔊 Ler Conteúdo"; };
+            btn.innerHTML = "🛑 Parar Leitura";
+            sintetizador.speak(locucaoAtiva);
+        }
+
+        function calcularInsumos(event) {
+            event.preventDefault();
+            const sementesPorHectare = parseInt(document.getElementById('cultura').value, 10);
+            const areaHectares = parseFloat(document.getElementById('area').value);
+            const precoMilSementes = parseFloat(document.getElementById('preco-mil').value);
+            const painel = document.getElementById('resultado-painel');
+
+            if (isNaN(sementesPorHectare) || isNaN(areaHectares) || isNaN(precoMilSementes) || areaHectares <= 0 || precoMilSementes <= 0) {
+                painel.className = "painel-resposta erro";
+                painel.innerHTML = `<strong>Aviso:</strong> Entrada de dados inválida. Digite valores numéricos válidos e positivos.`;
+                painel.style.display = "block";
+                return;
+            }
+
+            const totalSementes = sementesPorHectare * areaHectares;
+            const investimento = (totalSementes / 1000) * precoMilSementes;
+
+            painel.className = "painel-resposta sucesso";
+            painel.innerHTML = `
+                <h3>Relatório Computado:</h3>
+                <ul style="margin-bottom: 0.5rem; padding-left: 1.2rem;">
+                    <li><strong>Área Calculada:</strong> ${areaHectares.toLocaleString('pt-BR')} ha</li>
+                    <li><strong>Volume de Sementes Requerido:</strong> ${totalSementes.toLocaleString('pt-BR')} sementes</li>
+                    <li><strong>Custo de Investimento Estimado:</strong> R$ ${investimento.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</li>
+                </ul>
+            `;
+            painel.style.display = "block";
+        }
+    </script>
+</body>
+</html>
