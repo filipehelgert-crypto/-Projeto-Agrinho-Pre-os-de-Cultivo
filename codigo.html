@@ -437,7 +437,7 @@
                 </div>
 
                 <div class="item-link-externo" onclick="window.open('https://www.agricultura.pr.gov.br/deral', '_blank')">
-                    <img src="https://images.unsplash.com/photo-1536657464919-892541f6096a?w=600&q=80" alt="Plantação robusta de milho em fase final de maturação.">
+                    <img src="https://t3.ftcdn.net/jpg/03/53/70/68/240_F_353706863_t4jvFsiRJ6hAu5hiLz6rmdnJ0xMwNTh7.jpg" alt="Plantação robusta de milho em fase final de maturação.">
                     <div class="conteudo-link-externo">
                         <div>
                             <h3>DERAL (SEAB Paraná)</h3>
@@ -526,5 +526,31 @@
             painel.style.display = "block";
         }
     </script>
+</body>
+</html>loat(document.getElementById('preco-mil').value);
+const painel = document.getElementById('resultado-painel');
+
+if (isNaN(sementesPorHectare) || isNaN(areaHectares) || isNaN(precoMilSementes) || areaHectares <= 0 || precoMilSementes <= 0) {
+    painel.className = "painel-resposta erro";
+    painel.innerHTML = `<strong>Aviso:</strong> Entrada de dados inválida. Digite valores numéricos válidos e positivos.`;
+    painel.style.display = "block";
+    return;
+}
+
+const totalSementes = sementesPorHectare * areaHectares;
+const investimento = (totalSementes / 1000) * precoMilSementes;
+
+painel.className = "painel-resposta sucesso";
+painel.innerHTML = `
+    <h3>Relatório Computado:</h3>
+    <ul style="margin-bottom: 0.5rem; padding-left: 1.2rem;">
+        <li><strong>Área Calculada:</strong> ${areaHectares.toLocaleString('pt-BR')} ha</li>
+        <li><strong>Volume de Sementes Requerido:</strong> ${totalSementes.toLocaleString('pt-BR')} sementes</li>
+        <li><strong>Custo de Investimento Estimado:</strong> R$ ${investimento.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</li>
+    </ul>
+`;
+painel.style.display = "block";
+}
+</script>
 </body>
 </html>
